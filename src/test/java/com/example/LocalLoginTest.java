@@ -7,10 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+
+import org.testng.Assert;
 
 public class LocalLoginTest {
 
@@ -22,18 +23,17 @@ public class LocalLoginTest {
 
         ChromeOptions options = new ChromeOptions();
 
-        // Check whether code is running on GitHub Actions
-        if (System.getenv("GITHUB_ACTIONS") != null) {
+        // Run Chrome in headless mode
+        options.addArguments("--headless=new");
 
-            options.addArguments("--headless=new");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--disable-gpu");
-            options.addArguments("--window-size=1920,1080");
+        // Required for GitHub Actions
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--disable-extensions");
 
-        }
-
-        // Launch Chrome browser
+        // Start Chrome with configured options
         driver = new ChromeDriver(options);
 
         // Maximize browser only during local execution
