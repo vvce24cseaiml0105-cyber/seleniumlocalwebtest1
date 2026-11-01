@@ -16,25 +16,26 @@ public class LocalLoginTest {
 
     WebDriver driver;
 
-    // Runs before every test
+    // Runs before every test case
     @BeforeMethod
     public void setUp() {
 
         ChromeOptions options = new ChromeOptions();
 
+        // Run Chrome in headless mode
         options.addArguments("--headless=new");
+
+        // Required for GitHub Actions
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-extensions");
 
-        System.out.println("Chrome Options: " + options.asMap());
-
-        // Initialize Chrome only once
+        // Start Chrome with configured options
         driver = new ChromeDriver(options);
 
-        // Maximize only during local execution
+        // Maximize browser only during local execution
         if (System.getenv("GITHUB_ACTIONS") == null) {
             driver.manage().window().maximize();
         }
@@ -97,12 +98,14 @@ public class LocalLoginTest {
         Assert.assertEquals(bgColor, "rgba(173, 216, 230, 1)");
     }
 
-    // Runs after every test
+    // Runs after every test case
     @AfterMethod
     public void tearDown() {
 
         if (driver != null) {
+
             driver.quit();
+
         }
     }
 }
