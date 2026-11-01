@@ -32,4 +32,3 @@ jobs:
 
       - name: Run Selenium tests
         run: mvn clean test
-        working-directory: ./eclipse-workspace/seleniumlocalwebtest1
